@@ -1,0 +1,6 @@
+node_modules
+activities
+bin
+rides.txt
+runs.txt
+src/config.js
