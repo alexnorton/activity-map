@@ -3,4 +3,4 @@ activities
 bin
 rides.txt
 runs.txt
-src/config.js
+client/src/config.js
