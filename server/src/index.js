@@ -2,10 +2,11 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const StravaStrategy = require('passport-strava-oauth2').Strategy;
+const strava = require('strava-v3');
 
 const config = require('../config.json');
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -31,21 +32,20 @@ passport.use(
       callbackURL: 'http://localhost:3000/auth/strava/callback',
     },
     ((accessToken, refreshToken, profile, done) => {
-      // asynchronous verification, for effect...
-      process.nextTick(() => {
-        // To keep the example simple, the user's Strava profile is returned to
-        // represent the logged-in user.  In a typical application, you would want
-        // to associate the Strava account with a user record in your database,
-        // and return that user instead.
-        console.log(profile);
-        return done(null, profile);
-      });
+      process.nextTick(() => done(null, profile));
     }),
   ),
 );
 
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+    return;
+  }
+  res.redirect('/login');
+};
+
 app.get('/', (req, res) => {
-  console.log(req.user);
   res.json(req.user);
 });
 
@@ -56,10 +56,6 @@ app.get('/status', (req, res) => {
 app.get(
   '/auth/strava',
   passport.authenticate('strava', { scope: ['public'] }),
-  (req, res) => {
-    // The request will be redirected to Strava for authentication, so this
-    // function will not be called.
-  },
 );
 
 app.get(
@@ -70,11 +66,26 @@ app.get(
   },
 );
 
+app.get('/account', ensureAuthenticated, (req, res) => {
+  res.json(req.user);
+});
+
+app.get('/activities', ensureAuthenticated, (req, res) => {
+  strava.athlete.listActivities({
+    access_token: req.user.token,
+  }, (error, result, limits) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    res.json(result);
+  });
+});
+
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
 
-app.listen(PORT, () => {
-  console.log(`App started at http://localhost:${PORT}/`);
+app.listen(port, () => {
+  console.log(`App started at http://localhost:${port}/`);
 });
