@@ -3,5 +3,5 @@ module.exports = function requireAuthenticated(req, res, next) {
     next();
     return;
   }
-  res.redirect('/login');
+  res.send(401);
 };
