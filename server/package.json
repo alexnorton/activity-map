@@ -24,7 +24,14 @@
   "eslintConfig": {
     "extends": "airbnb-base",
     "rules": {
-      "no-console": "off"
+      "no-console": "off",
+      "comma-dangle": ["error", {
+        "arrays": "always",
+        "objects": "always",
+        "imports": "always",
+        "exports": "always",
+        "functions": "ignore"
+      }]
     }
   }
 }

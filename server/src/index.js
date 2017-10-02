@@ -33,8 +33,8 @@ passport.use(
     },
     ((accessToken, refreshToken, profile, done) => {
       process.nextTick(() => done(null, profile));
-    }),
-  ),
+    })
+  )
 );
 
 const ensureAuthenticated = (req, res, next) => {
@@ -55,7 +55,7 @@ app.get('/status', (req, res) => {
 
 app.get(
   '/auth/strava',
-  passport.authenticate('strava', { scope: ['public'] }),
+  passport.authenticate('strava', { scope: ['public'] })
 );
 
 app.get(
@@ -63,7 +63,7 @@ app.get(
   passport.authenticate('strava', { failureRedirect: '/login' }),
   (req, res) => {
     res.redirect('/');
-  },
+  }
 );
 
 app.get('/account', ensureAuthenticated, (req, res) => {
