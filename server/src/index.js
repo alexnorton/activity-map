@@ -35,7 +35,7 @@ passport.use(
     {
       clientID: config.STRAVA_CLIENT_ID,
       clientSecret: config.STRAVA_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/strava/callback',
+      callbackURL: 'http://localhost:3000/user/login/callback',
     },
     ((accessToken, refreshToken, profile, done) => {
       process.nextTick(() => done(null, profile));
@@ -43,10 +43,9 @@ passport.use(
   )
 );
 
-require('./routes/account')(app);
 require('./routes/activities')(app);
-require('./routes/auth')(app);
 require('./routes/status')(app);
+require('./routes/user')(app);
 
 app.listen(port, () => {
   console.log(`App started at http://localhost:${port}/`);

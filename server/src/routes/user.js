@@ -1,27 +1,32 @@
 const passport = require('passport');
 
+const ensureAuthenticated = require('../helpers/ensureAuthenticated');
 const User = require('../model/User');
 
 module.exports = (app) => {
+  app.get('/user', ensureAuthenticated, (req, res) => {
+    res.send(req.user);
+  });
+
   app.get(
-    '/auth/strava',
+    '/user/login',
     passport.authenticate('strava', { scope: ['public'] })
   );
 
   app.get(
-    '/auth/strava/callback',
+    '/user/login/callback',
     passport.authenticate('strava', { failureRedirect: '/login' }),
     (req, res) => {
       User.upsert({
         id: req.user.id,
         json: req.user,
       }).then(() => {
-        res.redirect('/account');
+        res.redirect('/user');
       });
     }
   );
 
-  app.get('/auth/logout', (req, res) => {
+  app.get('/user/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
