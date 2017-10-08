@@ -1,5 +1,7 @@
 const passport = require('passport');
 
+const User = require('../model/User');
+
 module.exports = (app) => {
   app.get(
     '/auth/strava',
@@ -10,7 +12,12 @@ module.exports = (app) => {
     '/auth/strava/callback',
     passport.authenticate('strava', { failureRedirect: '/login' }),
     (req, res) => {
-      res.redirect('/');
+      User.upsert({
+        id: req.user.id,
+        json: req.user,
+      }).then(() => {
+        res.redirect('/account');
+      });
     }
   );
 

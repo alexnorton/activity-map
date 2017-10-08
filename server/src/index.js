@@ -3,6 +3,8 @@ const session = require('express-session');
 const passport = require('passport');
 const StravaStrategy = require('passport-strava-oauth2').Strategy;
 
+const User = require('./model/User');
+
 const config = require('../config.json');
 
 const port = process.env.PORT || 3000;
@@ -16,11 +18,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser((user, done) => {
+  User.findById(user)
+    .then((result) => {
+      done(null, result);
+    }).catch((error) => {
+      done(error);
+    });
 });
 
 passport.use(
