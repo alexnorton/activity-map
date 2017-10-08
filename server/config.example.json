@@ -1,5 +1,6 @@
 {
   "STRAVA_CLIENT_ID": "",
   "STRAVA_CLIENT_SECRET": "",
-  "DATABASE_URI": ""
+  "DATABASE_URI": "",
+  "SESSION_SECRET": ""
 }
