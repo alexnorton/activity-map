@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 const ensureAuthenticated = require('../helpers/ensureAuthenticated');
-const User = require('../model/User');
+const { User } = require('../model');
 
 module.exports = (app) => {
   app.get('/user', ensureAuthenticated, (req, res) => {

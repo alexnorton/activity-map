@@ -3,7 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 const StravaStrategy = require('passport-strava-oauth2').Strategy;
 
-const User = require('./model/User');
+const { User } = require('./model');
 
 const config = require('../config.json');
 
