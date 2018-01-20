@@ -5,18 +5,10 @@ const { Activity, User } = require('../model');
 
 module.exports = (app) => {
   app.get('/activities', ensureAuthenticated, (req, res) => {
-    strava.athlete.listActivities(
-      {
-        access_token: req.user.json.token
-      },
-      (error, result, limits) => {
-        if (error) {
-          res.status(500).json({ error });
-          return;
-        }
-        res.json(result);
-      }
-    );
+    req.user.getActivities()
+      .then((activities) => {
+        res.json(activities);
+      });
   });
 
   app.get('/activities/strava', ensureAuthenticated, (req, res) => {
