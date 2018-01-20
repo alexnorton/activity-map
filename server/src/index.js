@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const StravaStrategy = require('passport-strava-oauth2').Strategy;
+const PgSession = require('connect-pg-simple')(session);
 
 const { User } = require('./model');
 
@@ -11,9 +12,18 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(session({
-  secret: config.SESSION_SECRET,
-}));
+app.use(
+  session({
+    store: new PgSession({
+      conString: config.DATABASE_URI,
+    }),
+    secret: config.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -25,7 +35,8 @@ passport.deserializeUser((user, done) => {
   User.findById(user)
     .then((result) => {
       done(null, result);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       done(error);
     });
 });
@@ -37,9 +48,9 @@ passport.use(
       clientSecret: config.STRAVA_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/user/login/callback',
     },
-    ((accessToken, refreshToken, profile, done) => {
+    (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => done(null, profile));
-    })
+    }
   )
 );
 
