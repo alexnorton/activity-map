@@ -2,7 +2,9 @@ const Sequelize = require('sequelize');
 
 const config = require('../../config');
 
-const sequelize = new Sequelize(config.DATABASE_URI);
+const sequelize = new Sequelize(config.DATABASE_URI, {
+  operatorsAliases: false,
+});
 
 const Activity = sequelize.define('activity', {
   id: {
