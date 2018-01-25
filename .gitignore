@@ -3,5 +3,5 @@ activities
 bin
 rides.txt
 runs.txt
-client/src/config.js
+client-old/src/config.js
 server/config.json
