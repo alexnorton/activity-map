@@ -28,6 +28,6 @@ module.exports = (app) => {
 
   app.get('/user/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.sendStatus(204);
   });
 };
