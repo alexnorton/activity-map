@@ -46,7 +46,7 @@ passport.use(
     {
       clientID: config.STRAVA_CLIENT_ID,
       clientSecret: config.STRAVA_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/user/login/callback',
+      callbackURL: `http://localhost:${port}/user/login/callback`,
     },
     (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => done(null, profile));
