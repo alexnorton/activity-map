@@ -1,19 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { increment, fetchUser } from '../actions';
+import { fetchUser } from '../actions';
 
 class LandingPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.increment = this.increment.bind(this);
     this.fetchUser = this.fetchUser.bind(this);
-  }
-
-  increment() {
-    this.props.increment();
   }
 
   fetchUser() {
@@ -29,13 +24,7 @@ class LandingPage extends React.Component {
       } else if (this.props.user.isFetching) {
         userSection = 'Fetching user';
       } else if (this.props.user.loggedIn) {
-        userSection = (
-          <p>
-            Logged in
-            <br />
-            <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
-          </p>
-        );
+        userSection = <Redirect to="/home" />;
       } else {
         userSection = 'Not logged in';
       }
@@ -45,12 +34,9 @@ class LandingPage extends React.Component {
 
     return (
       <div>
-        <p>Landing page</p>
+        <h2>Landing page</h2>
         <p>
-          Test value: {this.props.test} <button onClick={this.increment}>+</button>
-        </p>
-        <p>
-          <button onClick={this.fetchUser}>Login</button>
+          <Link to="/home">Login</Link>
         </p>
         {userSection}
       </div>
@@ -59,19 +45,15 @@ class LandingPage extends React.Component {
 }
 
 LandingPage.propTypes = {
-  test: PropTypes.number.isRequired,
-  increment: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
-  user: PropTypes.shape.isRequired,
+  user: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({
-  test: state.test,
   user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  increment: () => dispatch(increment()),
   fetchUser: () => dispatch(fetchUser()),
 });
 

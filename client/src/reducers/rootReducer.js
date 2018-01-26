@@ -5,6 +5,7 @@ import {
   USER_FAILURE,
   USER_SUCCESS_LOGGED_IN,
   USER_SUCCESS_LOGGED_OUT,
+  LOGOUT_SUCCESS,
 } from '../actions';
 
 const test = (state = 0, action) => {
@@ -16,16 +17,18 @@ const test = (state = 0, action) => {
   }
 };
 
-const user = (state = null, action) => {
+const user = (state = {}, action) => {
   switch (action.type) {
     case USER_REQUEST:
       return { isFetching: true };
     case USER_FAILURE:
-      return { isFetching: false, error: action.error };
+      return { error: action.error };
     case USER_SUCCESS_LOGGED_IN:
-      return { isFetching: false, loggedIn: true, user: action.user };
+      return { fetched: true, loggedIn: true, user: action.user };
     case USER_SUCCESS_LOGGED_OUT:
-      return { isFetching: false, loggedIn: false };
+      return { fetched: true, loggedIn: false };
+    case LOGOUT_SUCCESS:
+      return {};
     default:
       return state;
   }
