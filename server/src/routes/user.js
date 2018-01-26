@@ -21,7 +21,7 @@ module.exports = (app) => {
         id: req.user.id,
         json: req.user,
       }).then(() => {
-        res.redirect('/user');
+        res.redirect('http://localhost:3000/home');
       });
     }
   );
