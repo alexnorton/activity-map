@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchUser, logout, API_BASE } from '../actions';
+import { fetchUser, logout } from '../actions';
+import { API_BASE } from '../helpers/api';
 
 class HomePage extends React.Component {
   constructor(props) {

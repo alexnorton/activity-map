@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:3001';
+import { apiRequest } from '../helpers/api';
 
 // Test
 
@@ -33,7 +33,7 @@ export const userSuccessLoggedOut = () => ({
 
 export const fetchUser = () => (dispatch) => {
   dispatch(userRequest());
-  return fetch(`${API_BASE}/user`, { credentials: 'include' }).then(
+  return apiRequest('user').then(
     (response) => {
       if (response.status === 401) {
         return dispatch(userSuccessLoggedOut());
@@ -69,7 +69,7 @@ export const logoutFailure = () => ({
 
 export const logout = () => (dispatch) => {
   dispatch(logoutRequest());
-  return fetch(`${API_BASE}/user/logout`, { credentials: 'include' }).then(
+  return apiRequest('user/logout').then(
     (response) => {
       if (!response.ok) {
         return dispatch(logoutFailure(response.status));
