@@ -6,3 +6,4 @@ runs.txt
 client-old/src/config.js
 server/config.json
 docker/data/
+client/build/

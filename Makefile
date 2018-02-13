@@ -1,4 +1,4 @@
-.PHONY: up
+.PHONY: up install-client install-server install build-client
 
 up:
 	docker-compose -f docker/docker-compose.yml up
@@ -18,3 +18,10 @@ install-server:
 		yarn
 
 install: install-client install-server
+
+build-client:
+	docker-compose -f docker/docker-compose.yml run \
+		--no-deps \
+		--rm \
+		client \
+		yarn run build
