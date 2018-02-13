@@ -1,21 +1,11 @@
 import { combineReducers } from 'redux';
 import {
-  INCREMENT,
   USER_REQUEST,
   USER_FAILURE,
   USER_SUCCESS_LOGGED_IN,
   USER_SUCCESS_LOGGED_OUT,
   LOGOUT_SUCCESS,
 } from '../actions';
-
-const test = (state = 0, action) => {
-  switch (action.type) {
-    case INCREMENT:
-      return state + 1;
-    default:
-      return state;
-  }
-};
 
 const user = (state = {}, action) => {
   switch (action.type) {
@@ -35,7 +25,6 @@ const user = (state = {}, action) => {
 };
 
 const rootReducer = combineReducers({
-  test,
   user,
 });
 

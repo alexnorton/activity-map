@@ -1,12 +1,5 @@
 import { apiRequest } from '../helpers/api';
 
-// Test
-
-export const INCREMENT = 'INCREMENT';
-export const increment = () => ({
-  type: INCREMENT,
-});
-
 // User
 
 export const USER_REQUEST = 'USER_REQUEST';
