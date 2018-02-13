@@ -20,7 +20,7 @@ const test = (state = 0, action) => {
 const user = (state = {}, action) => {
   switch (action.type) {
     case USER_REQUEST:
-      return { isFetching: true };
+      return {};
     case USER_FAILURE:
       return { error: action.error };
     case USER_SUCCESS_LOGGED_IN:
@@ -28,7 +28,7 @@ const user = (state = {}, action) => {
     case USER_SUCCESS_LOGGED_OUT:
       return { fetched: true, loggedIn: false };
     case LOGOUT_SUCCESS:
-      return {};
+      return { fetched: true, loggedIn: false };
     default:
       return state;
   }
