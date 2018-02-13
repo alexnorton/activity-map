@@ -17,13 +17,15 @@ class HomePage extends React.Component {
   }
 
   render() {
+    const { givenName, familyName } = this.props.user.user.json.name;
+    const name = `${givenName} ${familyName}`;
+
     return (
       <div>
-        Logged in
-        <br />
-        <button onClick={this.logout}>Logout</button>
-        <br />
-        <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
+        <p>Hello {name}!</p>
+        <p>
+          <button onClick={this.logout}>Logout</button>
+        </p>
       </div>
     );
   }
@@ -45,4 +47,4 @@ const mapDispatchToProps = dispatch => ({
 
 const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
 
-export default userIsAuthenticated(withRouter(connectedHomePage));
+export default withRouter(userIsAuthenticated(connectedHomePage));
