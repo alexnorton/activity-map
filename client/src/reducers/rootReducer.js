@@ -5,6 +5,7 @@ import {
   USER_SUCCESS_LOGGED_IN,
   USER_SUCCESS_LOGGED_OUT,
   LOGOUT_SUCCESS,
+  UPDATE_ACTIVITIES,
 } from '../actions';
 
 const user = (state = {}, action) => {
@@ -24,8 +25,18 @@ const user = (state = {}, action) => {
   }
 };
 
+const activities = (state = { fetched: false, data: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_ACTIVITIES:
+      return { ...state, fetched: true, data: action.activities };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   user,
+  activities,
 });
 
 export default rootReducer;

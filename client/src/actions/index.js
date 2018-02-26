@@ -72,3 +72,18 @@ export const logout = () => (dispatch) => {
     error => dispatch(logoutFailure(error.toString())),
   );
 };
+
+// Activities
+
+export const UPDATE_ACTIVITIES = 'UPDATE_ACTIVITIES';
+export const updateActivities = activities => ({
+  type: UPDATE_ACTIVITIES,
+  activities,
+});
+
+export const fetchActivities = () => dispatch =>
+  apiRequest('activities')
+    .then(response => response.json())
+    .then(activitiesArray =>
+      Object.assign(...activitiesArray.map(({ id, json }) => ({ [id]: json }))))
+    .then(activities => dispatch(updateActivities(activities)));

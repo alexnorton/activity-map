@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchUser, logout } from '../actions';
 import { userIsAuthenticated } from '../helpers/auth';
+import Activities from './Activities';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class HomePage extends React.Component {
         <p>
           <button onClick={this.logout}>Logout</button>
         </p>
+        <Activities />
       </div>
     );
   }
