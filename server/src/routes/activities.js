@@ -11,9 +11,13 @@ module.exports = (app) => {
   });
 
   app.get('/activities/strava', ensureAuthenticated, async (req, res) => {
-    const activities = await strava(req.user, 'athlete', 'listActivities');
+    const activities = await strava(req.user, 'athlete', 'listActivities', {
+      page: parseInt(req.query.page, 10) || 1,
+    });
 
-    res.json(activities);
+    const activityIds = activities.map(({ id }) => id);
+
+    res.json(activityIds);
   });
 
   app.get('/activities/:activityId', ensureAuthenticated, async (req, res) => {
