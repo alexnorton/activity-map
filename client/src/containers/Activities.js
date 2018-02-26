@@ -10,18 +10,18 @@ class Activities extends React.Component {
     fetchActivities: PropTypes.func.isRequired,
   }
 
-  fetchActivities = () => {
+  componentDidMount() {
     this.props.fetchActivities();
   }
 
   render() {
     return (
       <Fragment>
-        <button onClick={this.fetchActivities}>Fetch activities</button>
         <ul>
-          {Object.keys(this.props.activities.data).map(id => (
-            <li key={id}>{id}</li>
-          ))}
+          {Object.keys(this.props.activities.data).map((id) => {
+            const activity = this.props.activities.data[id];
+            return <li key={id}>{id} - {activity.start_date} - {activity.name}</li>;
+          })}
         </ul>
       </Fragment>
     );
