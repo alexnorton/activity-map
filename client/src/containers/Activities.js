@@ -2,12 +2,13 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchActivities } from '../actions';
+import { fetchActivities, refreshActivities } from '../actions';
 
 class Activities extends React.Component {
   static propTypes = {
     activities: PropTypes.shape().isRequired,
     fetchActivities: PropTypes.func.isRequired,
+    refreshActivities: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -23,6 +24,7 @@ class Activities extends React.Component {
             return <li key={id}>{id} - {activity.start_date} - {activity.name}</li>;
           })}
         </ul>
+        <button onClick={this.props.refreshActivities}>Refresh activities</button>
       </Fragment>
     );
   }
@@ -34,6 +36,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchActivities: () => dispatch(fetchActivities()),
+  refreshActivities: () => dispatch(refreshActivities()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activities);
