@@ -85,5 +85,5 @@ export const fetchActivities = () => dispatch =>
   apiRequest('activities')
     .then(response => response.json())
     .then(activitiesArray =>
-      Object.assign(...activitiesArray.map(({ id, json }) => ({ [id]: json }))))
+      Object.assign({}, ...activitiesArray.map(({ id, json }) => ({ [id]: json }))))
     .then(activities => dispatch(updateActivities(activities)));
