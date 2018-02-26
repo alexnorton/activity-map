@@ -16,7 +16,7 @@ services:
     working_dir: /usr/lib/server
     ports:
       - 3001:3001
-    command: yarn start
+    command: yarn watch
     links:
       - db
     depends_on:
