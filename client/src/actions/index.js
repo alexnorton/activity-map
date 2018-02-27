@@ -85,13 +85,17 @@ export const fetchActivities = () => dispatch =>
   apiRequest('activities')
     .then(response => response.json())
     .then(activitiesArray =>
-      Object.assign({}, ...activitiesArray.map(({ id, json }) => ({ [id]: json }))))
+      Object.assign({}, ...activitiesArray.map(({ id, json }) => ({
+        [id]: { isSummary: false, data: json },
+      }))))
     .then(activities => dispatch(updateActivities(activities)));
 
 export const REFRESH_ACTIVITIES_SUCCESS = 'REFRESH_ACTIVITIES_SUCCESS';
-export const refreshActivitiesSuccess = (activityIds, page) => ({
+export const refreshActivitiesSuccess = (activities, page) => ({
   type: REFRESH_ACTIVITIES_SUCCESS,
-  activityIds,
+  activities: Object.assign(...activities.map(activity => ({
+    [activity.id]: { isSummary: true, data: activity },
+  }))),
   page,
 });
 
@@ -103,9 +107,9 @@ export const refreshActivitiesFinished = () => ({
 export const refreshActivities = (page = 1) => dispatch =>
   apiRequest(`activities/strava?page=${page}`)
     .then(response => response.json())
-    .then((activityIds) => {
-      if (activityIds.length > 0) {
-        dispatch(refreshActivitiesSuccess(activityIds, page));
+    .then((activities) => {
+      if (activities.length > 0) {
+        dispatch(refreshActivitiesSuccess(activities, page));
         return dispatch(refreshActivities(page + 1));
       }
       return dispatch(refreshActivitiesFinished());

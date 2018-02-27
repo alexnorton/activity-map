@@ -15,9 +15,7 @@ module.exports = (app) => {
       page: parseInt(req.query.page, 10) || 1,
     });
 
-    const activityIds = activities.map(({ id }) => id);
-
-    res.json(activityIds);
+    res.json(activities);
   });
 
   app.get('/activities/:activityId', ensureAuthenticated, async (req, res) => {

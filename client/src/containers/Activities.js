@@ -21,7 +21,7 @@ class Activities extends React.Component {
         <ul>
           {Object.keys(this.props.activities.data).map((id) => {
             const activity = this.props.activities.data[id];
-            return <li key={id}>{id} - {activity.start_date} - {activity.name}</li>;
+            return <li key={id}>{id} - {activity.data.start_date} - {activity.data.name}</li>;
           })}
         </ul>
         <button onClick={this.props.refreshActivities}>Refresh activities</button>
