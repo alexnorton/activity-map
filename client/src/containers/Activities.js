@@ -2,17 +2,17 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchActivities, refreshActivities } from '../actions';
+import { fetchActivitiesFromCache, fetchActivitiesFromStrava } from '../actions';
 
 class Activities extends React.Component {
   static propTypes = {
     activities: PropTypes.shape().isRequired,
-    fetchActivities: PropTypes.func.isRequired,
-    refreshActivities: PropTypes.func.isRequired,
+    fetchActivitiesFromCache: PropTypes.func.isRequired,
+    fetchActivitiesFromStrava: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    this.props.fetchActivities();
+    this.props.fetchActivitiesFromCache();
   }
 
   render() {
@@ -21,10 +21,10 @@ class Activities extends React.Component {
         <ul>
           {Object.keys(this.props.activities.data).map((id) => {
             const activity = this.props.activities.data[id];
-            return <li key={id}>{id} - {activity.data.start_date} - {activity.data.name}</li>;
+            return <li key={id}>{id} - {activity.start_date} - {activity.name}</li>;
           })}
         </ul>
-        <button onClick={this.props.refreshActivities}>Refresh activities</button>
+        <button onClick={this.props.fetchActivitiesFromStrava}>Refresh activities</button>
       </Fragment>
     );
   }
@@ -35,8 +35,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchActivities: () => dispatch(fetchActivities()),
-  refreshActivities: () => dispatch(refreshActivities()),
+  fetchActivitiesFromCache: () => dispatch(fetchActivitiesFromCache()),
+  fetchActivitiesFromStrava: () => dispatch(fetchActivitiesFromStrava()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activities);

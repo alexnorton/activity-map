@@ -6,7 +6,7 @@ import {
   USER_SUCCESS_LOGGED_OUT,
   LOGOUT_SUCCESS,
   UPDATE_ACTIVITIES,
-  REFRESH_ACTIVITIES_SUCCESS,
+  UPDATE_ACTIVITY,
 } from '../actions';
 
 const user = (state = {}, action) => {
@@ -30,8 +30,8 @@ const activities = (state = { fetched: false, data: {} }, action) => {
   switch (action.type) {
     case UPDATE_ACTIVITIES:
       return { ...state, fetched: true, data: action.activities };
-    case REFRESH_ACTIVITIES_SUCCESS:
-      return { ...state, data: { ...action.activities, ...state.data } };
+    case UPDATE_ACTIVITY:
+      return { ...state, data: { ...state.data, [action.activity.id]: action.activity } };
     default:
       return state;
   }

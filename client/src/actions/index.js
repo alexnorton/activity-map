@@ -81,36 +81,58 @@ export const updateActivities = activities => ({
   activities,
 });
 
-export const fetchActivities = () => dispatch =>
+export const UPDATE_ACTIVITY = 'UPDATE_ACTIVITY';
+export const updateActivity = activity => ({
+  type: UPDATE_ACTIVITY,
+  activity,
+});
+
+export const fetchActivitiesFromCache = () => dispatch =>
   apiRequest('activities')
     .then(response => response.json())
     .then(activitiesArray =>
-      Object.assign({}, ...activitiesArray.map(({ id, json }) => ({
-        [id]: { isSummary: false, data: json },
-      }))))
+      Object.assign(
+        {},
+        ...activitiesArray.map(({ id, json }) => ({
+          [id]: json,
+        })),
+      ))
     .then(activities => dispatch(updateActivities(activities)));
 
-export const REFRESH_ACTIVITIES_SUCCESS = 'REFRESH_ACTIVITIES_SUCCESS';
+export const FETCH_ACTIVITY_IDS_FROM_STRAVA_SUCCESS = 'FETCH_ACTIVITY_IDS_FROM_STRAVA_SUCCESS';
 export const refreshActivitiesSuccess = (activities, page) => ({
-  type: REFRESH_ACTIVITIES_SUCCESS,
+  type: FETCH_ACTIVITY_IDS_FROM_STRAVA_SUCCESS,
   activities: Object.assign(...activities.map(activity => ({
-    [activity.id]: { isSummary: true, data: activity },
+    [activity.id]: {},
   }))),
   page,
 });
 
-export const REFRESH_ACTIVITIES_FINISHED = 'REFRESH_ACTIVITIES_FINISHED';
+export const FETCH_ACTIVITY_IDS_FROM_STRAVA_FINISHED = 'FETCH_ACTIVITY_IDS_FROM_STRAVA_FINISHED';
 export const refreshActivitiesFinished = () => ({
-  type: REFRESH_ACTIVITIES_FINISHED,
+  type: FETCH_ACTIVITY_IDS_FROM_STRAVA_FINISHED,
 });
 
-export const refreshActivities = (page = 1) => dispatch =>
+export const fetchActivityIdsFromStrava = (page = 1, activities = []) => dispatch =>
   apiRequest(`activities/strava?page=${page}`)
     .then(response => response.json())
-    .then((activities) => {
-      if (activities.length > 0) {
-        dispatch(refreshActivitiesSuccess(activities, page));
-        return dispatch(refreshActivities(page + 1));
+    .then((newActivities) => {
+      if (newActivities.length > 0) {
+        dispatch(refreshActivitiesSuccess(newActivities, page));
+        return dispatch(fetchActivityIdsFromStrava(page + 1, [...activities, ...newActivities]));
       }
-      return dispatch(refreshActivitiesFinished());
+      dispatch(refreshActivitiesFinished());
+      return activities;
     });
+
+export const fetchActivity = id => dispatch =>
+  apiRequest(`activities/${id}`)
+    .then(response => response.json())
+    .then(({ json }) => dispatch(updateActivity(json)));
+
+export const fetchActivitiesFromStrava = () => dispatch =>
+  dispatch(fetchActivityIdsFromStrava()).then(activityIds =>
+    activityIds.reduce(
+      (chain, activityId) => chain.then(() => dispatch(fetchActivity(activityId))),
+      Promise.resolve(),
+    ));
