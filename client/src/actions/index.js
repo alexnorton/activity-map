@@ -93,8 +93,8 @@ export const fetchActivitiesFromCache = () => dispatch =>
     .then(activitiesArray =>
       Object.assign(
         {},
-        ...activitiesArray.map(({ id, json }) => ({
-          [id]: json,
+        ...activitiesArray.map(activity => ({
+          [activity.id]: activity,
         })),
       ))
     .then(activities => dispatch(updateActivities(activities)));
