@@ -18,13 +18,40 @@ class Activities extends React.Component {
   render() {
     return (
       <Fragment>
-        <ul>
-          {Object.keys(this.props.activities.data).map((id) => {
-            const activity = this.props.activities.data[id];
-            return <li key={id}>{id} - {activity.start_date} - {activity.name}</li>;
-          })}
-        </ul>
-        <button onClick={this.props.fetchActivitiesFromStrava}>Refresh activities</button>
+        <h4>Activities</h4>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                Date
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(this.props.activities.data).map((id) => {
+              const activity = this.props.activities.data[id];
+              return (
+                <tr key={id}>
+                  <td>{id}</td>
+                  <td>{activity.name}</td>
+                  <td className="text-nowrap">{activity.start_date}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <button
+          className="btn btn-primary"
+          onClick={this.props.fetchActivitiesFromStrava}
+        >
+          Refresh activities
+        </button>
       </Fragment>
     );
   }

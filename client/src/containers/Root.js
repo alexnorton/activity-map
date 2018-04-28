@@ -1,7 +1,9 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import Navbar from './Navbar';
 import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import { fetchUser } from '../actions';
@@ -15,8 +17,11 @@ class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <div>
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/home" component={HomePage} />
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/home" component={HomePage} />
+          </Switch>
         </div>
       </Provider>
     );
