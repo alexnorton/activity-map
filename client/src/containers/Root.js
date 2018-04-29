@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import { fetchUser } from '../actions';
+import ActivityPage from './ActivityPage';
 
 class Root extends React.Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class Root extends React.Component {
           <Switch>
             <Route path="/" exact component={LandingPage} />
             <Route path="/home" component={HomePage} />
+            <Route path="/activities/:id" component={ActivityPage} />
           </Switch>
         </div>
       </Provider>

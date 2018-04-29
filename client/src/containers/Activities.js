@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { fetchActivitiesFromCache, fetchActivitiesFromStrava } from '../actions';
 
@@ -39,7 +40,7 @@ class Activities extends React.Component {
               return (
                 <tr key={id}>
                   <td>{id}</td>
-                  <td>{activity.name}</td>
+                  <td><Link to={`/activities/${id}`}>{activity.name}</Link></td>
                   <td className="text-nowrap">{activity.start_date}</td>
                 </tr>
               );
