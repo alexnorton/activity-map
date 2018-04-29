@@ -33,6 +33,8 @@ class ActivityPage extends React.Component {
         ],
       });
 
+      const firstSymbolLayerIndex = defaultStyle.layers.findIndex(({ type }) => type === 'symbol');
+
       const mapStyle = immutable.fromJS({
         ...defaultStyle,
         sources: {
@@ -43,19 +45,34 @@ class ActivityPage extends React.Component {
           },
         },
         layers: [
-          ...defaultStyle.layers,
+          ...defaultStyle.layers.slice(0, firstSymbolLayerIndex),
           {
-            id: 'activity',
+            id: 'activity-bg',
             type: 'line',
             source: 'activity',
             paint: {
-              'line-color': '#dc3545',
-              'line-width': 4,
+              'line-color': '#d63031',
+              'line-width': 5,
             },
             layout: {
               'line-cap': 'round',
+              'line-join': 'round',
             },
           },
+          {
+            id: 'activity-fg',
+            type: 'line',
+            source: 'activity',
+            paint: {
+              'line-color': '#ff7675',
+              'line-width': 3,
+            },
+            layout: {
+              'line-cap': 'round',
+              'line-join': 'round',
+            },
+          },
+          ...defaultStyle.layers.slice(firstSymbolLayerIndex),
         ],
       });
 
