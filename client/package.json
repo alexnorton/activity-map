@@ -6,6 +6,7 @@
     "@mapbox/geojson-extent": "^0.3.2",
     "@mapbox/polyline": "^1.0.0",
     "bootstrap": "^4.1.0",
+    "deck.gl": "^5.2.3",
     "immutable": "^3.8.2",
     "mapbox-gl": "^0.45.0-beta.1",
     "prop-types": "^15.6.0",

@@ -10,6 +10,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Root from './containers/Root';
 import configureStore from './store/configureStore';
 
+import './index.css';
+
 const store = configureStore();
 
 ReactDOM.render(
