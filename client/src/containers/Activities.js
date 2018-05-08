@@ -30,6 +30,9 @@ class Activities extends React.Component {
                 Name
               </th>
               <th>
+                Type
+              </th>
+              <th>
                 Date
               </th>
             </tr>
@@ -37,10 +40,28 @@ class Activities extends React.Component {
           <tbody>
             {Object.keys(this.props.activities.data).map((id) => {
               const activity = this.props.activities.data[id];
+
+              let type;
+
+              switch (activity.type) {
+                case 'Ride':
+                  type = '🚴‍';
+                  break;
+                case 'Run':
+                  type = '🏃‍';
+                  break;
+                case 'Hike':
+                  type = '⛰';
+                  break;
+                default:
+                  type = activity.type; // eslint-disable-line prefer-destructuring
+              }
+
               return (
                 <tr key={id}>
                   <td>{id}</td>
                   <td><Link to={`/activities/${id}`}>{activity.name}</Link></td>
+                  <td>{type}</td>
                   <td className="text-nowrap">{activity.start_date}</td>
                 </tr>
               );
