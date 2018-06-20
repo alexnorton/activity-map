@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const morgan = require('morgan');
 const StravaStrategy = require('passport-strava-oauth2').Strategy;
 const PgSession = require('connect-pg-simple')(session);
 
@@ -11,6 +12,8 @@ const config = require('../config.json');
 const port = process.env.PORT || 3001;
 
 const app = express();
+
+app.use(morgan('dev'));
 
 app.use(
   session({

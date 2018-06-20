@@ -4,6 +4,7 @@ const config = require('../../config');
 
 const sequelize = new Sequelize(config.DATABASE_URI, {
   operatorsAliases: false,
+  logging: false,
 });
 
 const Activity = sequelize.define('activity', {
