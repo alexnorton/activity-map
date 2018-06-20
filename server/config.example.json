@@ -1,6 +1,6 @@
 {
-  "STRAVA_CLIENT_ID": "",
-  "STRAVA_CLIENT_SECRET": "",
-  "DATABASE_URI": "",
-  "SESSION_SECRET": ""
+  "STRAVA_CLIENT_ID": "client-id",
+  "STRAVA_CLIENT_SECRET": "client-secret",
+  "DATABASE_URI": "postgresql://postgres:password@localhost:5432/postgres",
+  "SESSION_SECRET": "session-secret"
 }
