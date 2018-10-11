@@ -5,30 +5,33 @@
   "dependencies": {
     "@mapbox/geojson-extent": "^0.3.2",
     "@mapbox/polyline": "^1.0.0",
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.1.2",
     "deck.gl": "^5.2.3",
     "immutable": "^3.8.2",
     "mapbox-gl": "^0.45.0-beta.1",
     "prop-types": "^15.6.0",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react-dom": "^16.3.3",
     "react-map-gl": "^3.2.7",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^1.1.5",
     "react-virtualized": "^9.18.5",
     "redux": "^3.7.2",
     "redux-auth-wrapper": "^2.0.2",
     "redux-thunk": "^2.2.0",
     "viewport-mercator-project": "^5.1.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "snyk": "^1.103.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -61,5 +64,6 @@
     "env": {
       "browser": true
     }
-  }
+  },
+  "snyk": true
 }
