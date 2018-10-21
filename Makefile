@@ -1,27 +1,8 @@
-.PHONY: up install-client install-server install build-client
+.PHONY: start
 
-up:
-	docker-compose -f docker/docker-compose.yml up
-
-install-client:
-	docker-compose -f docker/docker-compose.yml run \
-		--no-deps \
-		--rm \
-		client \
-		yarn
-
-install-server:
-	docker-compose -f docker/docker-compose.yml run \
-		--no-deps \
-		--rm \
-		server \
-		yarn
-
-install: install-client install-server
-
-build-client:
-	docker-compose -f docker/docker-compose.yml run \
-		--no-deps \
-		--rm \
-		client \
-		yarn run build
+start:
+	tmux new-session 'sh -c "cd docker && docker-compose up"' \; \
+		split-window 'sh -c "cd server && yarn watch"' \; \
+		split-window 'sh -c "cd client && yarn start"' \; \
+		select-layout even-vertical \; \
+		attach
