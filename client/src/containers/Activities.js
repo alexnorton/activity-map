@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { fetchActivitiesFromCache, fetchActivitiesFromStrava } from '../actions';
+import { fetchActivitiesFromCache } from '../actions/activities';
+import { fetchActivitiesFromStrava } from '../actions/update';
 
 class Activities extends React.Component {
   static propTypes = {
     activities: PropTypes.shape().isRequired,
     fetchActivitiesFromCache: PropTypes.func.isRequired,
     fetchActivitiesFromStrava: PropTypes.func.isRequired,
-  }
+  };
 
   componentDidMount() {
     this.props.fetchActivitiesFromCache();
@@ -23,18 +24,10 @@ class Activities extends React.Component {
         <table className="table">
           <thead>
             <tr>
-              <th>
-                ID
-              </th>
-              <th>
-                Name
-              </th>
-              <th>
-                Type
-              </th>
-              <th>
-                Date
-              </th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +53,9 @@ class Activities extends React.Component {
               return (
                 <tr key={id}>
                   <td>{id}</td>
-                  <td><Link to={`/activities/${id}`}>{activity.name}</Link></td>
+                  <td>
+                    <Link to={`/activities/${id}`}>{activity.name}</Link>
+                  </td>
                   <td>{type}</td>
                   <td className="text-nowrap">{activity.start_date}</td>
                 </tr>
@@ -68,10 +63,7 @@ class Activities extends React.Component {
             })}
           </tbody>
         </table>
-        <button
-          className="btn btn-primary"
-          onClick={this.props.fetchActivitiesFromStrava}
-        >
+        <button className="btn btn-primary" onClick={this.props.fetchActivitiesFromStrava}>
           Refresh activities
         </button>
       </Fragment>
@@ -88,4 +80,7 @@ const mapDispatchToProps = dispatch => ({
   fetchActivitiesFromStrava: () => dispatch(fetchActivitiesFromStrava()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Activities);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Activities);

@@ -6,7 +6,7 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import polyline from '@mapbox/polyline';
 import PropTypes from 'prop-types';
 
-import { fetchActivitiesFromCache } from '../actions';
+import { fetchActivitiesFromCache } from '../actions/activities';
 
 class MapPage extends React.Component {
   static propTypes = {
@@ -105,4 +105,7 @@ const mapDispatchToProps = dispatch => ({
   fetchActivitiesFromCache: () => dispatch(fetchActivitiesFromCache()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MapPage);

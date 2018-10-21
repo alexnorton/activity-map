@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Navbar from './Navbar';
 import LandingPage from './LandingPage';
 import HomePage from './HomePage';
-import { fetchUser } from '../actions';
+import { fetchUser } from '../actions/user';
 import ActivityPage from './ActivityPage';
 import MapPage from './MapPage';
 

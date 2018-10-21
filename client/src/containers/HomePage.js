@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchUser } from '../actions';
+import { fetchUser } from '../actions/user';
 import { userIsAuthenticated } from '../helpers/auth';
 import Activities from './Activities';
 
@@ -30,6 +30,9 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(fetchUser()),
 });
 
-const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
+const connectedHomePage = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomePage);
 
 export default withRouter(userIsAuthenticated(connectedHomePage));

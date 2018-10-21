@@ -10,7 +10,7 @@ import geojsonExtent from '@mapbox/geojson-extent';
 
 import defaultStyle from '../map-style.json';
 
-import { fetchActivity } from '../actions';
+import { fetchActivity } from '../actions/activities';
 
 const MAP_HEIGHT = 500;
 const MAP_MAX_FIT_WIDTH = 600;
@@ -24,13 +24,10 @@ class ActivityPage extends React.Component {
 
       const extent = geojsonExtent(geoJson);
       const mapViewport = fitBounds({
-        width: (window.innerWidth < MAP_MAX_FIT_WIDTH) ? window.innerWidth : MAP_MAX_FIT_WIDTH,
+        width: window.innerWidth < MAP_MAX_FIT_WIDTH ? window.innerWidth : MAP_MAX_FIT_WIDTH,
         height: MAP_HEIGHT,
         padding: 15,
-        bounds: [
-          [extent[0], extent[1]],
-          [extent[2], extent[3]],
-        ],
+        bounds: [[extent[0], extent[1]], [extent[2], extent[3]]],
       });
 
       const firstSymbolLayerIndex = defaultStyle.layers.findIndex(({ type }) => type === 'symbol');
@@ -144,4 +141,7 @@ const mapDispatchToProps = dispatch => ({
   fetchActivity: id => dispatch(fetchActivity(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ActivityPage);
