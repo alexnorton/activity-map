@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { fetchActivitiesFromCache } from '../actions/activities';
-import { fetchActivitiesFromStrava } from '../actions/update';
+import { findAndUpdateActivities } from '../actions/update';
 
 class Activities extends React.Component {
   static propTypes = {
     activities: PropTypes.shape().isRequired,
     fetchActivitiesFromCache: PropTypes.func.isRequired,
-    fetchActivitiesFromStrava: PropTypes.func.isRequired,
+    findAndUpdateActivities: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -63,7 +63,7 @@ class Activities extends React.Component {
             })}
           </tbody>
         </table>
-        <button className="btn btn-primary" onClick={this.props.fetchActivitiesFromStrava}>
+        <button className="btn btn-primary" onClick={this.props.findAndUpdateActivities}>
           Refresh activities
         </button>
       </Fragment>
@@ -77,7 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchActivitiesFromCache: () => dispatch(fetchActivitiesFromCache()),
-  fetchActivitiesFromStrava: () => dispatch(fetchActivitiesFromStrava()),
+  findAndUpdateActivities: () => dispatch(findAndUpdateActivities()),
 });
 
 export default connect(
