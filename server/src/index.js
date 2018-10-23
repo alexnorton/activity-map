@@ -18,12 +18,12 @@ app.use(morgan('dev'));
 app.use(
   session({
     store: new PgSession({
-      conString: config.DATABASE_URI,
+      conString: config.DATABASE_URI
     }),
     secret: config.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
   })
 );
 
@@ -42,7 +42,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-  User.findById(user)
+  User.findByPk(user)
     .then((result) => {
       done(null, result);
     })
@@ -56,7 +56,7 @@ passport.use(
     {
       clientID: config.STRAVA_CLIENT_ID,
       clientSecret: config.STRAVA_CLIENT_SECRET,
-      callbackURL: `http://localhost:${port}/user/login/callback`,
+      callbackURL: `http://localhost:${port}/user/login/callback`
     },
     (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => done(null, profile));
