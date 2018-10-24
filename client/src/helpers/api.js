@@ -1,3 +1,3 @@
-export const API_BASE = 'http://localhost:3001';
+export const API_BASE = '/api';
 
-export const apiRequest = path => fetch(`${API_BASE}/${path}`, { credentials: 'include' });
+export const apiRequest = path => fetch(`${API_BASE}/${path}`);
