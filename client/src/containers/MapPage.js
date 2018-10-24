@@ -86,7 +86,7 @@ class MapPage extends React.Component {
                     }
                   }}
                   getLineWidth={() => 2}
-                  lineWidthMinPixels={0.7}
+                  lineWidthMinPixels={1}
                 />
               </DeckGL>
             </ReactMapGL>
