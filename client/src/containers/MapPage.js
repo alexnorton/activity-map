@@ -6,12 +6,12 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import polyline from '@mapbox/polyline';
 import PropTypes from 'prop-types';
 
-import { fetchActivitiesFromCache } from '../actions/activities';
+import { fetchActivities } from '../actions/activities';
 
 class MapPage extends React.Component {
   static propTypes = {
     activities: PropTypes.shape().isRequired,
-    fetchActivitiesFromCache: PropTypes.func.isRequired,
+    fetchActivities: PropTypes.func.isRequired,
   };
 
   static getDerivedStateFromProps(nextProps) {
@@ -52,7 +52,7 @@ class MapPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchActivitiesFromCache();
+    this.props.fetchActivities();
   }
 
   handleViewportChange = viewport => this.setState({ viewport });
@@ -102,7 +102,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchActivitiesFromCache: () => dispatch(fetchActivitiesFromCache()),
+  fetchActivities: () => dispatch(fetchActivities()),
 });
 
 export default connect(

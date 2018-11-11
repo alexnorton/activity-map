@@ -12,19 +12,16 @@ export const updateActivity = activity => ({
   activity,
 });
 
-export const fetchActivitiesFromCache = () => dispatch =>
-  apiRequest('activities')
-    .then(response => response.json())
-    .then(activitiesArray =>
-      Object.assign(
-        {},
-        ...activitiesArray.map(activity => ({
-          [activity.id]: activity,
-        })),
-      ))
-    .then(activities => dispatch(updateActivities(activities)));
+export const fetchActivities = () => dispatch => apiRequest('activities')
+  .then(response => response.json())
+  .then(activitiesArray => Object.assign(
+    {},
+    ...activitiesArray.map(activity => ({
+      [activity.id]: activity,
+    })),
+  ))
+  .then(activities => dispatch(updateActivities(activities)));
 
-export const fetchActivity = id => dispatch =>
-  apiRequest(`activities/${id}`)
-    .then(response => response.json())
-    .then(({ json }) => dispatch(updateActivity(json)));
+export const fetchActivity = id => dispatch => apiRequest(`activities/${id}`)
+  .then(response => response.json())
+  .then(({ json }) => dispatch(updateActivity(json)));
