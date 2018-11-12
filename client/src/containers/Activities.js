@@ -2,6 +2,13 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from 'reactstrap';
 
 import { fetchActivities } from '../actions/activities';
 import { findAndUpdateActivities } from '../actions/update';
@@ -21,14 +28,15 @@ class Activities extends React.Component {
     return (
       <Fragment>
         <h4>Activities</h4>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={this.props.findAndUpdateActivities}
-        >
-          Fetch new activities
-        </button>
-        <button type="button" className="btn" />
+        <UncontrolledDropdown group>
+          <Button color="primary" onClick={this.props.findAndUpdateActivities}>
+            Fetch new activities
+          </Button>
+          <DropdownToggle caret color="primary" className="dropdown-toggle-split" />
+          <DropdownMenu>
+            <DropdownItem>Fetch all activities</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
         <table className="table">
           <thead>
             <tr>
