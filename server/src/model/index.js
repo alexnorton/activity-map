@@ -9,7 +9,7 @@ const sequelize = new Sequelize(config.DATABASE_URI, {
 
 const Activity = sequelize.define('activity', {
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     primaryKey: true
   },
   json: {

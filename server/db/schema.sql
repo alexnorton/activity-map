@@ -7,7 +7,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE activities (
-  id integer NOT NULL,
+  id bigint NOT NULL,
   "userId" integer,
   json jsonb,
   "createdAt" timestamp without time zone,
