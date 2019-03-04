@@ -23,6 +23,7 @@ module.exports = (app) => {
   app.get('/activities/strava', ensureAuthenticated, async (req, res) => {
     const activities = await strava(req.user, 'athlete', 'listActivities', {
       page: parseInt(req.query.page, 10) || 1,
+      after: req.query.after && parseInt(req.query.after, 10),
       per_page: 100
     });
 
